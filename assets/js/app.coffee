@@ -4,6 +4,10 @@
 class SomeModel extends Backbone.Model
 
 
+class SomeCollection extends Backbone.Collection
+  model: SomeModel
+
+
 class SomeView extends Backbone.View
   initialize: ->
     @model.on 'change:status', @showStatus
@@ -21,10 +25,6 @@ class SomeView extends Backbone.View
 
   onButtonClick: ->
     @options.socket.emit 'update data', @model.toJSON()
-
-
-class SomeCollection extends Backbone.Collection
-  model: SomeModel
 
 
 class SomeCollectionView extends Backbone.View
@@ -46,7 +46,7 @@ class SomeController
     aView = new SomeView {el:'#aView', model:aModel, socket:socket}
     aCollectionView = new SomeCollectionView {el:'#aCollectionView', collection:aCollection}
 
-    socket.on 'data updated', (incoming) ->
+    socket.on 'data updated', ->
       aModel.set 'status', 'saved!'
 
     socket.on 'someone else updated', (incoming) ->
