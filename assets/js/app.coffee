@@ -32,7 +32,7 @@ class SomeCollectionView extends Backbone.View
     @collection.on 'add', @render
 
   render: =>
-    items = (@collection.map (each) -> "<li>#{each.get 'aProperty'}</li>")
+    items = @collection.map (each) -> "<li>#{each.get 'aProperty'}</li>"
     (@$ 'ul').html items.join ''
 
 
