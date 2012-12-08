@@ -6,3 +6,7 @@ body {
 a {
   color: #00B7FF;
 }
+
+.status {
+ color:green; font:bold italic 0.8em Georgia;
+}
