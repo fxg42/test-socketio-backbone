@@ -37,9 +37,7 @@ class SomeCollectionView extends Backbone.View
 
 
 class SomeController
-  constructor: ->
-    socket = io.connect()
-
+  constructor: (socket) ->
     aModel = new SomeModel
     aCollection = new SomeCollection
 
@@ -53,4 +51,4 @@ class SomeController
       aCollection.add new SomeModel incoming
 
 
-$ -> new SomeController
+$ -> new SomeController io.connect()
