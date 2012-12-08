@@ -38,7 +38,7 @@ class SomeCollectionView extends Backbone.View
 
 class SomeController
   constructor: ->
-    socket = io.connect 'http://localhost:3000'
+    socket = io.connect()
 
     aModel = new SomeModel
     aCollection = new SomeCollection
