@@ -8,12 +8,12 @@ class SomeView extends Backbone.View
   el: '#aView'
 
   initialize: ->
-    @model.on 'change:status', @render
+    @model.on 'change:status', @showStatus
 
   events:
     'click button': 'onButtonClick'
 
-  render: =>
+  showStatus: =>
     ($ "<span style='color:green; font:bold italic 0.8em Georgia;'> #{@model.get 'status'}</span>").appendTo(@$el).delay(1000).fadeOut(200, -> ($ @).remove())
     @model.set 'status', '', {silent:yes}
 
