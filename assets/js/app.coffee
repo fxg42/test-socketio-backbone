@@ -10,13 +10,13 @@ class SomeView extends Backbone.View
 
   events:
     'click button': 'onButtonClick'
-    'change input': 'onChangeInput'
+    'change input': 'onInputChange'
 
   showStatus: =>
-    ($ "<span class='status'> #{@model.get 'status'}</span>").appendTo(@$el).delay(1000).fadeOut(200, -> ($ @).remove())
+    ($ "<span class='status'>#{@model.get 'status'}</span>").appendTo(@$el).delay(1000).fadeOut(200, -> ($ @).remove())
     @model.set 'status', '', {silent:yes}
 
-  onChangeInput: ->
+  onInputChange: ->
     @model.set 'aProperty', (@$ 'input').val()
 
   onButtonClick: ->
