@@ -36,8 +36,8 @@ class SomeCollectionView extends Backbone.View
     (@$ 'ul').html items.join ''
 
 
-class Controller extends Backbone.Router
-  initialize: (socket) ->
+class SomeController
+  constructor: ->
     socket = io.connect 'http://localhost:3000'
 
     aModel = new SomeModel
@@ -53,5 +53,4 @@ class Controller extends Backbone.Router
       aCollection.add new SomeModel incoming
 
 
-$ ->
-  new Controller
+$ -> new SomeController
