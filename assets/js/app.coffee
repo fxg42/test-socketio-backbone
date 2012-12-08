@@ -10,13 +10,17 @@ class SomeView extends Backbone.View
 
   events:
     'click button': 'onButtonClick'
+    'change input': 'onChangeInput'
 
   showStatus: =>
-    ($ "<span style='color:green; font:bold italic 0.8em Georgia;'> #{@model.get 'status'}</span>").appendTo(@$el).delay(1000).fadeOut(200, -> ($ @).remove())
+    ($ "<span class='status'> #{@model.get 'status'}</span>").appendTo(@$el).delay(1000).fadeOut(200, -> ($ @).remove())
     @model.set 'status', '', {silent:yes}
 
+  onChangeInput: ->
+    @model.set 'aProperty', (@$ 'input').val()
+
   onButtonClick: ->
-    @options.socket.emit 'update data', (@$ 'input').val()
+    @options.socket.emit 'update data', @model.toJSON()
 
 
 class SomeCollection extends Backbone.Collection
@@ -46,7 +50,7 @@ class Controller extends Backbone.Router
       aModel.set 'status', 'saved!'
 
     socket.on 'someone else updated', (incoming) ->
-      aCollection.add {aProperty:incoming}
+      aCollection.add new SomeModel incoming
 
 
 $ ->
