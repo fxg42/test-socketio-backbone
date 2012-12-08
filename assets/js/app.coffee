@@ -5,8 +5,6 @@ class SomeModel extends Backbone.Model
 
 
 class SomeView extends Backbone.View
-  el: '#aView'
-
   initialize: ->
     @model.on 'change:status', @showStatus
 
@@ -26,8 +24,6 @@ class SomeCollection extends Backbone.Collection
 
 
 class SomeCollectionView extends Backbone.View
-  el: '#aCollectionView'
-
   initialize: ->
     @collection.on 'add', @render
 
@@ -43,8 +39,8 @@ class Controller extends Backbone.Router
     aModel = new SomeModel
     aCollection = new SomeCollection
 
-    aView = new SomeView {model:aModel, socket:socket}
-    aCollectionView = new SomeCollectionView {collection:aCollection}
+    aView = new SomeView {el:'#aView', model:aModel, socket:socket}
+    aCollectionView = new SomeCollectionView {el:'#aCollectionView', collection:aCollection}
 
     socket.on 'data updated', (incoming) ->
       aModel.set 'status', 'saved!'
