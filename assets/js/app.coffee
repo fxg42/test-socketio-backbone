@@ -14,7 +14,7 @@ class SomeView extends Backbone.View
 
   showStatus: =>
     ($ "<span class='status'>#{@model.get 'status'}</span>").appendTo(@$el).delay(1000).fadeOut(200, -> ($ @).remove())
-    @model.set 'status', '', {silent:yes}
+    @model.unset 'status', {silent:yes}
 
   onInputChange: ->
     @model.set 'aProperty', (@$ 'input').val()
