@@ -45,9 +45,9 @@ var SessionSockets = require('session.socket.io'),
 
 sessionSockets.on('connection', function (err, socket, session) {
   socket.on('update data', function (data) {
-    session.data = data;
-    socket.emit('data updated', data);
-    socket.broadcast.emit('someone else updated', data);
+    session.data = data; // example use of session object associated with this socket.
+    socket.emit('data updated', data); // reply to client that sent the data.
+    socket.broadcast.emit('someone else updated', data); // inform all other clients.
   });
 });
 
