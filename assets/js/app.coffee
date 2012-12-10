@@ -2,10 +2,17 @@
 #= require vendor/backbone
 
 class SomeModel extends Backbone.Model
+  listen: (socket) ->
+    socket.on 'data updated', =>
+      @trigger 'new:status', 'saved!'
 
 
 class SomeCollection extends Backbone.Collection
   model: SomeModel
+
+  listen: (socket) ->
+    socket.on 'someone else updated', (incoming) =>
+      @add new SomeModel incoming
 
 
 class SomeView extends Backbone.View
@@ -38,16 +45,13 @@ class SomeCollectionView extends Backbone.View
 class SomeController
   constructor: (socket) ->
     aModel = new SomeModel
+    aModel.listen socket
+
     aCollection = new SomeCollection
+    aCollection.listen socket
 
     aView = new SomeView {el:'#aView', model:aModel, socket:socket}
     aCollectionView = new SomeCollectionView {el:'#aCollectionView', collection:aCollection}
-
-    socket.on 'data updated', ->
-      aModel.trigger 'new:status', 'saved!'
-
-    socket.on 'someone else updated', (incoming) ->
-      aCollection.add new SomeModel incoming
 
 
 $ -> new SomeController io.connect()
