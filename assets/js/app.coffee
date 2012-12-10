@@ -10,15 +10,14 @@ class SomeCollection extends Backbone.Collection
 
 class SomeView extends Backbone.View
   initialize: ->
-    @model.on 'change:status', @showStatus
+    @model.on 'new:status', @showNewStatus
 
   events:
     'click button': 'onButtonClick'
     'change input': 'onInputChange'
 
-  showStatus: =>
-    ($ "<span class='status'>#{@model.get 'status'}</span>").appendTo(@$el).delay(1000).fadeOut(200, -> ($ @).remove())
-    @model.unset 'status', {silent:yes}
+  showNewStatus: (status) =>
+    ($ "<span class='status'>#{status}</span>").appendTo(@$el).delay(1000).fadeOut(200, -> ($ @).remove())
 
   onInputChange: ->
     @model.set 'aProperty', (@$ 'input').val()
@@ -45,7 +44,7 @@ class SomeController
     aCollectionView = new SomeCollectionView {el:'#aCollectionView', collection:aCollection}
 
     socket.on 'data updated', ->
-      aModel.set 'status', 'saved!'
+      aModel.trigger 'new:status', 'saved!'
 
     socket.on 'someone else updated', (incoming) ->
       aCollection.add new SomeModel incoming
