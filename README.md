@@ -8,4 +8,4 @@ clients? Is it a simpler design or not?
 
     Backbone.View <-[js events]-- Backbone.Model <-[socket.io events]-- Server
 
-                                     * * *
+* * *
